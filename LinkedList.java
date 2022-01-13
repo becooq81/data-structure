@@ -70,6 +70,7 @@ public class LinkedList<E> {
 		E value = tail.getData();
 		if (head == tail) {
 			head = tail = null;
+			return value;
 		}
 		Node<E> temp = head, prev = null;
 		while (temp != tail) {
