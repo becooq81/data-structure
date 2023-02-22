@@ -1,3 +1,5 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedList<E> {
 	private Node<E> head, tail=null; // having tail pointer can potentially improve efficiency
@@ -30,6 +32,32 @@ public class LinkedList<E> {
 		}
 		public Node<E> getNext(){
 			return this.next;
+		}
+	}
+
+	/*
+	Iterator helper class
+	 */
+	class IteratorHelper implements Iterator<E> {
+
+		Node<E> index;
+
+		public IteratorHelper() {
+			index = head;
+		}
+		@Override
+		public boolean hasNext() {
+			return (index != null);
+		}
+
+		@Override
+		public E next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			E val = index.data;
+			index = index.next;
+			return val;
 		}
 	}
 
@@ -167,6 +195,13 @@ public class LinkedList<E> {
 			return null;
 		}
 		return tail.getData();
+	}
+
+	/*
+	Iterator
+	 */
+	public Iterator<E> iterator() {
+		return new IteratorHelper();
 	}
 	public static void main(String[] args) {
 		LinkedList<Integer> list = new LinkedList<Integer>();
