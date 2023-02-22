@@ -1,7 +1,9 @@
 
 public class LinkedList<E> {
-	private Node<E> head, tail=null;
+	private Node<E> head, tail=null; // having tail pointer can potentially improve efficiency
 	private int size = 0;
+
+	// node inner class
 	class Node<E> {
 		E data;
 		Node<E> next;
@@ -30,6 +32,11 @@ public class LinkedList<E> {
 			return this.next;
 		}
 	}
+
+	/*
+	add node at head
+	- no boundary conditions
+	 */
 	public void addFirst(E data) {
 		Node<E> node = new Node(data);
 		if (size == 0) {
@@ -41,6 +48,11 @@ public class LinkedList<E> {
 		head = node;
 		size++;
 	}
+
+	/*
+	add node at tail
+	- if the linked list is empty, adding node at tail is the same as adding node at head
+	 */
 	public void addLast(E data) {
 		if (size==0) {
 			addFirst(data);
@@ -51,6 +63,12 @@ public class LinkedList<E> {
 		tail = node;
 		size++;
 	}
+
+	/*
+	remove node at head
+	- if the linked list is empty, error
+	- if the linked list has one node, linked list becomes empty
+	 */
 	public E removeFirst() {
 		if (size == 0) {
 			return null;
@@ -64,6 +82,13 @@ public class LinkedList<E> {
 		size--;
 		return value;
 	}
+
+	/*
+	remove node at tail
+	- if the linked list is empty, error
+	- if the linked list has one node, linked list becomes empty
+	- else-wise, find the tail and its previous node and set the tail's previous nodes' next pointer to null
+	 */
 	public E removeLast() {
 		if (size == 0) {
 			return null;
@@ -83,6 +108,11 @@ public class LinkedList<E> {
 		size--;
 		return value;
 	}
+
+	/*
+	search data
+	- cast data to compare the data to the nodes' data
+	 */
 	public boolean contains(E data) {
 		Node<E> temp = head;
 		while (temp != null) {
@@ -103,6 +133,10 @@ public class LinkedList<E> {
 		}
 		return result;
 	}
+
+	/*
+	search and remove data
+	 */
 	public E remove(E data) {
 		Node<E> temp = head, prev = null;
 		while (temp != null) {
