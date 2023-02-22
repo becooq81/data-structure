@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Hash<K, V> {
 	
@@ -28,9 +29,15 @@ public class Hash<K, V> {
 	}
 	
 	int numElements, tableSize;
+
+	/*
+	When maxLoadFactor reaches approximately 0.6~0.7, resize the table
+	 */
 	double maxLoadFactor;
 	LinkedList<HashElement<K, V>>[] harray;
 	ArrayList<HashElement<K, V>> elements;
+
+
 	public Hash(int tableSize) {
 		this.tableSize = tableSize;
 		maxLoadFactor = 0.75;
@@ -83,6 +90,34 @@ public class Hash<K, V> {
 		}
 		harray = new_array;
 		tableSize = newSize;
+	}
+
+	class IteratorHelper<T> implements Iterator<T> {
+		T[] keys;
+		int position;
+
+		public IteratorHelper() {
+			keys = (T[]) new Object[numElements];
+			int p = 0;
+			for (int i = 0; i < tableSize; i++) {
+				LinkedList<HashElement<K, V>> list = harray[i];
+				for (HashElement<K, V> h : list) {
+					keys[p++] = (T) h.key;
+				}
+			}
+			position = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return position < keys.length;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) return null;
+			return keys[position++];
+		}
 	}
 	
 }
