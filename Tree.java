@@ -21,8 +21,10 @@ public class Tree<E> {
 				node.right = new Node<E> (obj);
 				System.exit(0);
 			}
+			// if the node has a right child, call add on the right child
 			add(obj, node.right);
 		}
+		// if the node does not have a left (and hence right) child
 		if (node.left == null) {
 			node.left = new Node<E> (obj);
 			return;
@@ -51,6 +53,7 @@ public class Tree<E> {
 		}
 		return contains(obj, node.left);
 	}
+	// node -> grandparent
 	public Node<E> leftRotate(Node<E> node) {
 		Node<E> temp = node.right;
 		node.right = temp.left;

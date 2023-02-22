@@ -22,7 +22,10 @@ public class AVLTree<T> {
 		add(root, node);
 	}
 	public void add(Node<T> parent, Node<T> newNode) {
+		// if newly added node is greater than parent
 		if (((Comparable<T>) newNode.data).compareTo(parent.data)>0) {
+			// if theere is no right child, add as the right child
+			// else, call add function on right child
 			if (parent.right == null) {
 				parent.right = newNode;
 				newNode.parent = parent;
@@ -31,6 +34,7 @@ public class AVLTree<T> {
 				add(parent.right, newNode);
 			}
 		}
+		// if newly added node is less than parent
 		else {
 			if (parent.left == null) {
 				parent.left = newNode;
@@ -42,6 +46,9 @@ public class AVLTree<T> {
 		}
 	checkBalance(newNode);
 	}
+	/*
+	check if qualification of AVLTree is met: balance <= 1
+	 */
 	public void checkBalance(Node<T> node) {
 		if (Math.abs(height(node.left) - height(node.right))>1) {
 			rebalance(node);
